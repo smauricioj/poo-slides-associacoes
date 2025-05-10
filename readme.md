@@ -60,6 +60,7 @@ classDiagram
 ```mermaid
 %%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 100}}}%%
 classDiagram
+    direction LR
     class Ponto {
         - x : double
         - y : double
