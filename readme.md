@@ -216,27 +216,27 @@ classDiagram
     direction TB
     class App {
         -gerenciador: Gerenciador
-        +executa()
+        +executa() void
     }
 
     class Gerenciador {
         -pedidos: Queue~Pedido~
-        +registrarPedido()
-        +listarPedidos()
+        +registrarPedido() void
+        +listarPedidos() List~Pedido~
     }
 
     class Pedido {
         -numero: int
         -data: LocalDate
         -itens: List~Item~
-        -valorTotal: double
-        +calcularTotal() double
-        +adicionarItem(Item)
+        +adicionarItem(Item) void
+        +valorTotal() void
     }
 
     class Item {
         -nome: String
         -descricao: String
+        -categoria: String 
         -preco: double
         -restricoes: Set~String~
         -categoria: String
@@ -244,8 +244,9 @@ classDiagram
 
     class Cardapio {
         -itens: Set~Item~
-        +listarItens()
-        +filtrarPorCategoria(String)
+        +getItem(nome : String) Item
+        +listarItens() List~Item~
+        +listarItens(categoria : String) List~Item~
     }
 
     App "1" --> "1"  Gerenciador
