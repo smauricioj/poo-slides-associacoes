@@ -19,9 +19,9 @@ classDiagram
 
 ```mermaid
 classDiagram
-    direction TB    
-    Aluno -- Curso
-    Carro -- Motor
+    direction LR
+    Aluno -- Curso : cursa
+    Carro -- Motor : contém
 ```
 
 ### Multiplicidade
@@ -90,6 +90,7 @@ classDiagram
 ```mermaid
 %%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 100}}}%%
 classDiagram
+    direction TB
     class Carro {
         - marca : String
         - propulsor : Motor
@@ -126,7 +127,7 @@ classDiagram
 ```mermaid
 %%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 100}}}%%
 classDiagram
-    direction TB
+    direction LR
     class Carro {
         - marca : String
         - propulsor : Motor
@@ -142,7 +143,8 @@ classDiagram
         - calibragem: double
         + Roda()
     }
-    
+    Carro "1" o-- "3..4" Roda
+
     note for Carro "public boolean calibrado ( ) {
     ⠀⠀for ( Roda r : this.rodas) {
     ⠀⠀⠀⠀if ( r.calibragem <= 34 ) {
@@ -151,22 +153,20 @@ classDiagram
     ⠀⠀}
     ⠀⠀return true;
     }"
-    
-    Roda "3..4" --o "1" Carro
 ```
 
 ### Composição
 
 ```mermaid
-%%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 100}}}%%
+%%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 75}}}%%
 classDiagram
-    direction TB
+    direction LR
     class Livro {
         - titulo : String
         - autor : Pessoa
         - capitulos : List~Capitulo~
         + Livro(t : String, a : Pessoa)
-        + adicionaCapitulo(t : String, n : int) void
+        + adicionaCap(t : String, n : int) void
         + imprimir() void
     }
     
@@ -176,11 +176,11 @@ classDiagram
         + Capitulo(t : String, n : int)
     }
     
-    note for Livro "public void adicionaCapitulo(String t, int n) {
-    ⠀⠀this.capitulos.add(new Capitulo(t, n);
+    note for Livro "public void adicionaCap(String t, int n) {
+    ⠀⠀cap = new Capitulo(t, n)
+    ⠀⠀this.capitulos.add(cap);
     }"
-    
-    Capitulo "1..*" --* "1" Livro
+    Livro "1" *-- "1..*" Capitulo
 ```
 
 ### Dependência
@@ -188,7 +188,7 @@ classDiagram
 ```mermaid
 %%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 100}}}%%
 classDiagram
-    direction TB
+    direction LR
     class Jogador {
         - nome : String
         + Jogador(n : String)
@@ -206,7 +206,7 @@ classDiagram
     ⠀⠀// ...
     }"
     
-    Dado <.. Jogador : jogar
+    Jogador ..> Dado : usa
 ```
 
 ## Exemplo
@@ -214,9 +214,9 @@ classDiagram
 ```mermaid
 %%{init: {'flowchart': {'nodeSpacing': 100, 'rankSpacing': 100}}}%%
 classDiagram
-    direction TB
+    direction LR
     class App {
-        -gerenciador: Gerenciador
+        -g: Gerenciador
         +executa() void
     }
 
@@ -247,14 +247,13 @@ classDiagram
         -itens: Set~Item~
         +getItem(nome : String) Item
         +listarItens() List~Item~
-        +listarItens(categoria : String) List~Item~
     }
 
     App "1" --> "1"  Gerenciador
     Gerenciador "1" *-- "*" Pedido
     Gerenciador ..> Cardapio : registrarPedido
     Cardapio "1" *-- "*" Item
-    Item "*" --o "*" Pedido
+    Pedido "*" o-- "*" Item
 ```
 
 
